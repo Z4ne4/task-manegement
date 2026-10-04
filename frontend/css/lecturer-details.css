@@ -53,13 +53,13 @@
   .lecturer-full-head .lecturer-back { grid-row: 1; grid-column: 1; width: 42px; height: 44px; }
   .lecturer-full-title { grid-row: 1; grid-column: 2; }
   .lecturer-full-title h1 { font-size: 19px; }
-  .lecturer-full-title p { font-size: 11px; line-height: 1.4; }
-  .lecturer-full-head .lecturer-status { grid-row: 2; grid-column: 1; padding: 7px 10px; font-size: 11px; }
+  .lecturer-full-title p { font-size: 13px; line-height: 1.4; }
+  .lecturer-full-head .lecturer-status { grid-row: 2; grid-column: 1; padding: 7px 10px; font-size: 13px; }
   .lecturer-full-head .lecturer-date { grid-row: 2; padding: 7px 8px; }
   .lecturer-full-head .lecturer-date:nth-last-child(2) { grid-column: 2; }
   .lecturer-full-head .lecturer-date:last-child { grid-row: 3; grid-column: 1 / -1; }
-  .lecturer-full-head .lecturer-date > span { font-size: 10px; }
-  .lecturer-full-head .lecturer-date > b { padding-left: 0; font-size: 12px; }
+  .lecturer-full-head .lecturer-date > span { font-size: 13px; }
+  .lecturer-full-head .lecturer-date > b { padding-left: 0; font-size: 13px; }
   .lecturer-side-cards { grid-template-columns: 1fr; }
   .lecturer-info-card, .lecturer-upload-card, .lecturer-notes-card { padding: 10px; }
   .lecturer-instructions { padding: 16px 13px; font-size: 13px; }

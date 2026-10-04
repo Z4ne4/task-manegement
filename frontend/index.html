@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="css/dashboard.css" />
     <link rel="stylesheet" href="css/member.css" />
     <link rel="stylesheet" href="css/lecturer-details.css" />
+    <link rel="stylesheet" href="css/preview-notice.css" />
   </head>
   <body>
     <div class="sh">
@@ -29,7 +30,7 @@
             <path
               d="M5 20C4 11 10 4 20 4c0 9-5 15-13 15M5 20c3-5 6-8 10-11"
             /></svg
-          ><span>TaskManage</span>
+          ><span>CPS1043</span>
         </div>
         <nav id="nv" aria-label="Navigasi utama"></nav>
         <div class="sidebar-account">
@@ -40,6 +41,46 @@
       <main class="mn" id="mn"></main>
     </div>
     <dialog id="dg"><form method="dialog" id="df"></form></dialog>
+    <dialog
+      id="preview-notice"
+      class="preview-notice"
+      aria-labelledby="preview-notice-title"
+      aria-describedby="preview-notice-description"
+    >
+      <button
+        class="preview-notice-close"
+        id="preview-notice-close"
+        type="button"
+        aria-label="Close notice"
+      >
+        ×
+      </button>
+      <div class="preview-notice-icon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none">
+          <rect x="8" y="10" width="32" height="23" rx="2" />
+          <path d="M18 39h12M24 33v6M3 8 1 6M45 8l2-2M2 20H0M48 20h-2" />
+        </svg>
+      </div>
+      <h2 id="preview-notice-title">Frontend Preview Only</h2>
+      <p id="preview-notice-description">
+        This system is currently a frontend-only preview. Some features, buttons,
+        and data may not work properly because the backend is not connected yet.
+        This preview is for interface demonstration purposes only.
+      </p>
+      <div class="preview-notice-info">
+        <span aria-hidden="true">i</span>
+        <b>Some actions may be unavailable.</b>
+      </div>
+      <div class="preview-notice-actions">
+        <label class="preview-notice-choice">
+          <input id="preview-notice-no-show" type="checkbox" />
+          <span>Don’t show again</span>
+        </label>
+        <button id="preview-notice-confirm" class="preview-notice-confirm" type="button" autofocus>
+          Got it
+        </button>
+      </div>
+    </dialog>
 
     <script src="js/app.js" defer></script>
   </body>

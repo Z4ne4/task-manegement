@@ -234,7 +234,7 @@
       </div>
     </section>`;
   const mem3 = () =>
-    `<div class="cd"><div class="ch">${i("users")}<h3>Team Members (RotiCanai)</h3></div>${MEM.map((m) => `<div class="tl ${m.you ? "hl" : ""}"><span class="av">${(m.short || m.n)[0]}</span><div><b>${m.n}</b><div class="mu" style="font-size:.78rem">${m.r}</div></div>${m.you ? '<span class="you">You</span>' : ""}</div>`).join("")}</div>`;
+    `<div class="cd"><div class="ch">${i("users")}<h3>Team Members (RotiCanai)</h3></div>${MEM.map((m) => `<div class="tl ${m.you ? "hl" : ""}"><span class="av">${(m.short || m.n)[0]}</span><div><b>${m.n}</b><div class="mu" style="font-size:.8125rem">${m.r}</div></div>${m.you ? '<span class="you">You</span>' : ""}</div>`).join("")}</div>`;
 
   function dashboardTasks() {
     return [{
@@ -887,4 +887,24 @@
     scrollTo(0, 0);
   });
   draw();
+  const previewNotice = $("#preview-notice");
+  const previewNoticeStorageKey = "cps1043-hide-frontend-preview-notice";
+  let hidePreviewNotice = false;
+  try {
+    hidePreviewNotice = localStorage.getItem(previewNoticeStorageKey) === "true";
+  } catch {
+    // The notice still works in browsers that block local storage.
+  }
+  if (!hidePreviewNotice) previewNotice.showModal();
+  $("#preview-notice-close").addEventListener("click", () => previewNotice.close());
+  $("#preview-notice-confirm").addEventListener("click", () => {
+    if ($("#preview-notice-no-show").checked) {
+      try {
+        localStorage.setItem(previewNoticeStorageKey, "true");
+      } catch {
+        // Closing the notice does not depend on browser storage.
+      }
+    }
+    previewNotice.close();
+  });
 })();

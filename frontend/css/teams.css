@@ -9,9 +9,9 @@
   border-radius: 11px;
   background: var(--sf);
 }
-.team-name-count { display: block; margin-top: -4px; color: #7a8492; font-size: 10px; font-weight: 400; text-align: right; }
-.team-initial-help { margin-top: -4px; color: #6e7885; font-size: 11px; font-weight: 400; }
-.team-initial-preview { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #e6e9ed; border-radius: 6px; background: #f7f7f6; color: #344054; font-size: 12px; font-weight: 700; }
+.team-name-count { display: block; margin-top: -4px; color: #7a8492; font-size: 13px; font-weight: 400; text-align: right; }
+.team-initial-help { margin-top: -4px; color: #6e7885; font-size: 13px; font-weight: 400; }
+.team-initial-preview { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid #e6e9ed; border-radius: 6px; background: #f7f7f6; color: #344054; font-size: 13px; font-weight: 700; }
 .teams-tabs {
   display: flex;
   align-self: stretch;
@@ -148,7 +148,7 @@
   border-radius: 99px;
   background: var(--gs);
   color: var(--g);
-  font-size: 12px;
+  font-size: 13px;
 }
 .directory-owner:first-letter {
   color: #eda80b;
@@ -285,7 +285,7 @@
     min-width: 0;
     flex: 1;
     padding-inline: 2px;
-    font-size: 12px;
+    font-size: 13px;
   }
   .teams-tabs button.selected::after {
     bottom: 0;

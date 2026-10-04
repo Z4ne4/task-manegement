@@ -213,7 +213,7 @@
 }
 .workload-name > span {
   color: #748093;
-  font-size: 12px;
+  font-size: 13px;
   white-space: nowrap;
 }
 .workload-counts {
@@ -234,7 +234,7 @@
   font-size: 15px;
 }
 .workload-counts small {
-  font-size: 10px;
+  font-size: 13px;
   white-space: nowrap;
 }
 .workload-completed {
@@ -278,7 +278,7 @@
 .activity-message {
   min-width: 0;
   color: #3f4a5b;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.4;
 }
 .activity-message b {
@@ -295,7 +295,7 @@
 }
 .team-activity-row time {
   color: #81899a;
-  font-size: 11px;
+  font-size: 13px;
   white-space: nowrap;
 }
 @media (max-width: 1100px) {
@@ -349,7 +349,7 @@
   }
   .tb2:has(.team-search) > button:not(.bt) {
     min-height: 44px;
-    font-size: 12px;
+    font-size: 13px;
   }
   .tb2:has(.team-search) .team-search {
     flex: 1 0 100%;
@@ -396,7 +396,7 @@
     content: attr(data-label);
     flex: none;
     color: #727b86;
-    font-size: 11px;
+    font-size: 13px;
   }
   .team-table .team-mobile-label {
     display: none;
@@ -500,7 +500,7 @@
   color: #df4242;
 }
 .task-field > span small {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 400;
 }
 .task-field input,
@@ -532,7 +532,7 @@
   margin-top: -7px;
   text-align: right;
   color: #758091;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 400;
 }
 .task-add-actions {

@@ -22,7 +22,7 @@
 }
 .overview-heading h1 {
   color: #101827;
-  font-size: 34px;
+  font-size: 36px;
 }
 .overview-heading > p {
   margin: 2px 0 0;
@@ -120,7 +120,7 @@
   border-radius: 99px;
   background: #e8eef6;
   color: #405573;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
 }
 .overview-team-copy > p {
@@ -303,7 +303,7 @@
     min-height: 34px;
   }
   .overview-heading h1 {
-    font-size: 40px;
+    font-size: 36px;
   }
   .overview-grid {
     gap: 18px;
@@ -348,7 +348,7 @@
   }
   .overview-notice {
     align-items: flex-start;
-    font-size: 12px;
+    font-size: 13px;
   }
   .overview-grid {
     gap: 12px;
@@ -379,7 +379,7 @@
   }
   .read-only-badge {
     padding: 5px 9px;
-    font-size: 10px;
+    font-size: 13px;
   }
   .overview-team-copy > p {
     margin: 8px 0 12px;
@@ -387,7 +387,7 @@
   }
   .overview-meta {
     gap: 13px;
-    font-size: 12px;
+    font-size: 13px;
   }
   .overview-description p {
     font-size: 14px;
@@ -405,7 +405,7 @@
     height: 46px;
   }
   .overview-member p {
-    font-size: 12px;
+    font-size: 13px;
   }
   .overview-side {
     grid-template-columns: minmax(0, 1fr);
