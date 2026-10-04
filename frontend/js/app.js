@@ -110,7 +110,6 @@
     teamActivityExpanded = false,
     dashboardTab = "all",
     dashboardSort = "earliest",
-    dashboardQuery = "",
     memberQuery = "",
     memberNotice = "";
   const teamActivity = [];
@@ -251,7 +250,6 @@
   function dashboardRows() {
     const matches = dashboardTasks()
       .filter((task) => dashboardTab === "all" || task.status === dashboardTab || (dashboardTab === "In Progress" && task.status === "Ongoing"))
-      .filter((task) => task.title.toLowerCase().includes(dashboardQuery.trim().toLowerCase()))
       .sort((a, b) => dashboardSort === "earliest" ? a.date.localeCompare(b.date) : b.date.localeCompare(a.date));
     return matches.length
       ? matches.map((task) => `<tr><td><a class="dashboard-task-link" href="#${task.page}">${escapeHtml(task.title)}</a></td><td>${task.source}</td><td><span class="dashboard-date">${i("cal")}${escapeHtml(task.dateLabel)}</span></td><td><span class="dashboard-status dashboard-status-${task.status.toLowerCase().replaceAll(" ", "-")}">${task.status}</span></td><td><a class="dashboard-task-action" href="#${task.page}" aria-label="Open ${escapeHtml(task.title)}">⋮</a></td></tr>`).join("")
@@ -271,7 +269,7 @@
       const count = (status) => tasks.filter((task) => status === "In Progress" ? ["In Progress", "Ongoing"].includes(task.status) : task.status === status).length;
       const upcoming = upcomingDashboardTasks();
       const filters = [["all", "All", tasks.length], ["To Do", "To Do", count("To Do")], ["In Progress", "In Progress", count("In Progress")], ["Completed", "Completed", count("Completed")]];
-      return `<div class="dashboard-topbar"><label class="dashboard-search">${i("search")}<input id="gq" type="search" value="${escapeHtml(dashboardQuery)}" placeholder="Search tasks, teams, or keywords..." aria-label="Search tasks, teams, or keywords"></label>${top()}</div>
+      return `<div class="dashboard-topbar">${top()}</div>
 <section class="dashboard-welcome"><div><h1>Welcome back, Nizam</h1><p class="dashboard-project"><b>RotiCanai</b><span></span>${escapeHtml(teamDirectory[0].project)}</p><p class="dashboard-welcome-note">Stay organised and keep track of your tasks and deadlines.</p></div><div class="dashboard-hero-art"><img src="assets/planner.svg" alt="Desk with a calendar, laptop, books and plants"><p>Plan<br>Organise<br>Make it happen</p></div></section>
 <section class="dashboard-stats" aria-label="Task summary">${[["doc", "Total Tasks", tasks.length, "green"], ["list", "To Do", count("To Do"), "blue"], ["clock", "In Progress", count("In Progress"), "amber"], ["ck", "Completed", count("Completed"), "green"]].map(([icon, label, value, tone]) => `<article class="dashboard-stat"><span class="dashboard-stat-icon ${tone}">${i(icon)}</span><div><small>${label}</small><strong>${value}</strong></div></article>`).join("")}</section>
 <section class="dashboard-content"><article class="dashboard-panel dashboard-my-tasks"><header class="dashboard-panel-heading"><h2>${i("doc")}My Tasks</h2><label class="dashboard-sort"><select id="dashboard-sort" aria-label="Sort tasks by due date"><option value="earliest" ${dashboardSort === "earliest" ? "selected" : ""}>Due Date (Earliest)</option><option value="latest" ${dashboardSort === "latest" ? "selected" : ""}>Due Date (Latest)</option></select></label></header><div class="dashboard-tabs" role="tablist" aria-label="Filter my tasks">${filters.map(([key, label, number]) => `<button type="button" role="tab" aria-selected="${dashboardTab === key}" class="${dashboardTab === key ? "selected" : ""}" data-a="dashboardTab" data-v="${key}">${label} (${number})</button>`).join("")}</div><div class="dashboard-table-scroll"><table class="dashboard-task-table"><thead><tr><th>Task Title</th><th>Source</th><th>Deadline</th><th>Status</th><th>Open</th></tr></thead><tbody id="dashboard-task-rows">${dashboardRows()}</tbody></table></div></article>
@@ -801,10 +799,6 @@
       $("#member-rows").innerHTML = memberRows();
       prepareTables();
     }
-    if (e.target.id === "gq") {
-      dashboardQuery = e.target.value;
-      $("#dashboard-task-rows").innerHTML = dashboardRows();
-    }
     if (e.target.id === "teams-search") {
       teamsQuery = e.target.value;
       $("#teams-grid").innerHTML = teamCards();
@@ -851,10 +845,6 @@
       $("#task-description-count").textContent = String(e.target.value.length);
   });
   mn.addEventListener("keydown", (e) => {
-    if (e.target.id === "gq" && e.key === "Enter") {
-      dashboardQuery = e.target.value;
-      $("#dashboard-task-rows").innerHTML = dashboardRows();
-    }
   });
   mn.addEventListener("change", (e) => {
     if (e.target.id === "dashboard-sort") {
