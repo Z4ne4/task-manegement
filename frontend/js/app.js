@@ -405,7 +405,7 @@
       <td><time datetime="${lecturerTask.assigned}">${fd(lecturerTask.assigned)}</time></td>
       <td><time datetime="${lecturerTask.deadline}">${fd(lecturerTask.deadline)}</time></td>
       <td><span class="lecturer-status"><span aria-hidden="true"></span>${lecturerTask.status}</span></td>
-      <td><button type="button" class="lecturer-open" data-a="lecturerDetails" aria-label="View Group &amp; Project Information">${i("rt")}</button></td>
+      <td><button type="button" class="lecturer-open" data-a="lecturerDetails" aria-label="View task detail"><span>View Task Detail</span>${i("rt")}</button></td>
     </tr>`
       : '<tr><td colspan="5" class="lecturer-empty">No tasks found.</td></tr>';
   }
