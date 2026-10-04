@@ -50,6 +50,14 @@ const assert = require("node:assert/strict");
     if (await evaluate('!!document.querySelector("#mn h1")')) break;
     await new Promise((r) => setTimeout(r, 100));
   }
+  await evaluate(`localStorage.removeItem('cps1043-hide-frontend-preview-notice'); location.reload()`);
+  for (let attempt = 0; attempt < 50; attempt++) {
+    if (await evaluate('!!document.querySelector("#mn h1") && document.querySelector("#preview-notice").open')) break;
+    await new Promise((r) => setTimeout(r, 100));
+  }
+  assert.equal(await evaluate('document.querySelector("#preview-notice").open'), true);
+  await evaluate(`document.querySelector('#preview-notice-no-show').checked=true; document.querySelector('#preview-notice-confirm').click()`);
+  assert.equal(await evaluate('document.querySelector("#preview-notice").open'), false);
   const output = path.join(__dirname, "..", "qa");
   fs.mkdirSync(output, { recursive: true });
   const results = [];
@@ -60,11 +68,11 @@ const assert = require("node:assert/strict");
       deviceScaleFactor: 1,
       mobile: false,
     });
-    for (const page of ["home", "team", "member", "lecturer"]) {
+    for (const page of ["home", "lecturer", "lecturer-details", "team", "teams", "team-overview", "team-manage", "member"]) {
       await evaluate(`location.hash = '${page}'`);
       await settle();
       const metrics = await evaluate(
-        `({ width: innerWidth, clientWidth: document.documentElement.clientWidth, scrollWidth: document.documentElement.scrollWidth, page: document.body.dataset.page, heading: document.querySelector('h1').textContent, nav: document.querySelectorAll('[aria-current="page"]').length })`,
+        `({ width: innerWidth, clientWidth: document.documentElement.clientWidth, scrollWidth: document.documentElement.scrollWidth, page: document.body.dataset.page, heading: document.querySelector('h1').textContent, nav: document.querySelectorAll('#nv [aria-current="page"]').length })`,
       );
       assert.equal(metrics.page, page);
       assert.equal(metrics.nav, 1);
@@ -88,7 +96,7 @@ const assert = require("node:assert/strict");
   await evaluate("location.hash = 'team'");
   await settle();
   await evaluate(
-    `document.querySelector('[data-a="add"]').click(); document.querySelector('[name="t"]').value='Mobile QA task <check>'; document.querySelector('[name="d"]').value='2026-10-30'; document.querySelector('#df').requestSubmit(document.querySelector('#df [value="ok"]'))`,
+    `document.querySelector('[data-a="add"]').click(); document.querySelector('[name="t"]').value='Mobile QA task <check>'; document.querySelector('[name="d"]').value='2026-10-30'; document.querySelector('[name="w"]').value=document.querySelector('[name="w"] option:not([disabled])').value; document.querySelector('#df').requestSubmit(document.querySelector('#df [value="add"]'))`,
   );
   await settle();
   assert(
@@ -101,7 +109,7 @@ const assert = require("node:assert/strict");
   );
   assert.equal(await evaluate(`document.querySelectorAll('#rw tr').length`), 1);
   await evaluate(
-    `const checkbox = document.querySelector('#rw .ck'); checkbox.checked=true; checkbox.dispatchEvent(new Event('change', {bubbles:true}))`,
+    `const status = document.querySelector('#rw .team-status-select'); status.value='2'; status.dispatchEvent(new Event('change', {bubbles:true}))`,
   );
   assert(
     await evaluate(
@@ -115,7 +123,7 @@ const assert = require("node:assert/strict");
   );
   assert(await evaluate(`document.querySelector('.lecturer-empty') !== null`));
   await evaluate(
-    `document.querySelector('[data-a="lecturerTab"][data-v="ongoing"]').click()`,
+    `document.querySelector('[data-a="lecturerTab"][data-v="all"]').click()`,
   );
   assert(
     await evaluate(`document.querySelector('.lecturer-task-row') !== null`),
@@ -179,8 +187,8 @@ const assert = require("node:assert/strict");
           "add task",
           "escape input",
           "search",
-          "complete task",
-          "lecturer status filters",
+          "change team task status",
+          "lecturer task filters",
           "lecturer search",
           "open and close lecturer details",
           "select and submit lecturer attachment",

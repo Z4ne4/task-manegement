@@ -1670,17 +1670,22 @@ td {
   }
   .sb nav {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 3px;
   }
   .sb nav a {
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
     margin: 0;
-    padding: 8px 2px;
-    min-height: 55px;
-    font-size: 13px;
+    padding: 7px 2px;
+    min-height: 62px;
+    font-size: 12px;
+    line-height: 1.2;
     text-align: center;
+  }
+  .sb nav a .i {
+    width: 21px;
+    height: 21px;
   }
   .mn,
   [data-page="home"] .mn {
@@ -1734,6 +1739,21 @@ td {
   .pf > svg {
     display: none;
   }
+  [data-page="home"] .dashboard-topbar .pf > div,
+  [data-page="home"] .dashboard-topbar .pf > svg {
+    display: block;
+  }
+  [data-page="home"] .dashboard-topbar .pf > svg {
+    width: 17px;
+    height: 17px;
+  }
+  [data-page="home"] .dashboard-topbar .pf > div {
+    font-size: 13px;
+    line-height: 1.2;
+  }
+  [data-page="home"] .dashboard-topbar .pf small {
+    font-size: 12px;
+  }
   .pf .av {
     width: 34px;
     height: 34px;
@@ -1745,7 +1765,8 @@ td {
     min-width: 0;
   }
   .sb nav a {
-    font-size: 13px;
+    font-size: 12px;
+    padding-inline: 1px;
   }
   .wl {
     min-height: auto !important;
