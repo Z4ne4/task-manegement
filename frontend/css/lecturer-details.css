@@ -52,6 +52,9 @@
 }
 @media (max-width: 600px) {
   .lecturer-page-topbar { margin: 0 -14px 0; }
+  .lecturer-page-topbar .dashboard-mobile-brand { display: inline-flex; align-items: center; gap: 6px; color: #18212d; font-size: 18px; }
+  .lecturer-page-topbar .dashboard-mobile-brand .i { width: 25px; height: 25px; color: var(--g); }
+  .lecturer-page-topbar .dashboard-mobile-brand b span { color: var(--g); }
   .lecturer-full-page { gap: 12px; }
   .lecturer-full-head { grid-template-columns: 42px minmax(0, 1fr) minmax(0, 1fr); gap: 9px; }
   .lecturer-full-head .lecturer-back { grid-row: 1; grid-column: 1; width: 42px; height: 44px; }
@@ -66,8 +69,9 @@
   .lecturer-full-head .lecturer-date > b { padding-left: 0; font-size: 13px; }
   .lecturer-side-cards { grid-template-columns: 1fr; }
   .lecturer-info-card, .lecturer-upload-card, .lecturer-notes-card { padding: 10px; }
-  .lecturer-instructions { padding: 16px 13px; font-size: 13px; }
-  .lecturer-instructions ul { padding: 14px 12px 14px 29px; }
-  .lecturer-role-list ol { padding-left: 20px; }
+  .lecturer-info-card > h3, .lecturer-upload-card > h3, .lecturer-notes-card > h3 { min-height: 54px; font-size: 16px; }
+  .lecturer-instructions { padding: 18px 14px; font-size: 15px; line-height: 1.5; }
+  .lecturer-instructions ul { gap: 9px; padding: 15px 12px 15px 29px; }
+  .lecturer-role-list ol { gap: 8px; padding-left: 20px; }
   .lecturer-dropzone { min-height: 200px; }
 }

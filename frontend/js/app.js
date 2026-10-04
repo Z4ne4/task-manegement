@@ -197,7 +197,7 @@
     </div>`;
   const lecturerDetails = () => `
     <section class="lecturer-full-page" aria-labelledby="lecturer-detail-title">
-      <div class="dashboard-topbar lecturer-page-topbar"><label class="dashboard-search">${i("search")}<input type="search" placeholder="Search tasks, teams, or keywords..." aria-label="Search tasks, teams, or keywords"></label>${top()}</div>
+      <div class="dashboard-topbar lecturer-page-topbar"><div class="dashboard-mobile-brand"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20C4 11 10 4 20 4c0 9-5 15-13 15M5 20c3-5 6-8 10-11"/></svg><b>CPS<span>1043</span></b></div>${top()}</div>
       <header class="lecturer-full-head">
         <a class="lecturer-back" href="#lecturer" aria-label="Back to lecturer tasks">${i("lf")}</a>
         <div class="lecturer-full-title"><h1 id="lecturer-detail-title">${escapeHtml(lecturerTask.title)}</h1><p>View the project details, requirements and submission uploaded by your lecturer.</p></div>
@@ -277,7 +277,7 @@
     },
 
     lecturer() {
-      return `${hd("Lecturer Task", "Tasks assigned by your lecturer")}
+      return `<div class="lecturer-mobile-topbar"><b>CPS<span>1043</span></b>${top()}</div>${hd("Lecturer Task", "Tasks assigned by your lecturer")}
         <section class="lecturer-list" aria-label="Lecturer tasks">
           <div class="lecturer-toolbar">
             <div class="lecturer-tabs" role="group" aria-label="Filter by status">
@@ -308,8 +308,8 @@
     },
 
     team() {
-      return `${hd("Team Task", "Manage and track tasks within your group")}<div class="cd pc team-group"><div class="hd"><span class="ib">${i("users")}</span><div><h3>RotiCanai</h3><div class="mu">${escapeHtml(teamDirectory[0].project)}</div></div><div class="team-member-total">${i("users")}<b>${MEM.length}</b><span>Group Members</span></div><a class="bt" href="#member">${i("users")}View Members</a></div>
-<div class="tb2">${[
+      return `<div class="team-mobile-topbar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20C4 11 10 4 20 4c0 9-5 15-13 15M5 20c3-5 6-8 10-11"/></svg><b>CPS<span>1043</span></b>${top()}</div>${hd("Team Task", "Manage and track tasks within your group")}<div class="cd pc team-group"><div class="hd"><span class="ib">${i("users")}</span><div><h3>RotiCanai</h3><div class="mu">${escapeHtml(teamDirectory[0].project)}</div></div><div class="team-member-total">${i("users")}<b>${MEM.length}</b><span>Group Members</span></div><a class="bt" href="#member">${i("users")}View Members</a></div></div>
+<div class="cd pc team-work-area"><div class="tb2">${[
         ["all", "All Tasks"],
         ["my", "My Tasks"],
         ["on", "Ongoing"],
@@ -322,7 +322,7 @@
         .join(
           "",
         )}<label class="sr team-search">${i("search")}<input id="q" value="${escapeHtml(Q)}" placeholder="Search tasks..." aria-label="Search tasks"></label><button class="bt d team-add" data-a="add">${i("plus")}Add Task</button></div>
-<div class="team-table-wrap"><div class="sc"><table class="team-table"><thead><tr><th scope="col">Task Title</th><th scope="col">Assigned To</th><th scope="col">Due Date</th><th scope="col">Status</th><th scope="col">Actions</th></tr></thead><tbody id="rw">${rows()}</tbody></table></div></div></div></div>
+<div class="team-table-wrap"><div class="sc"><table class="team-table"><thead><tr><th scope="col">Task Title</th><th scope="col">Assigned To</th><th scope="col">Due Date</th><th scope="col">Status</th><th scope="col">Actions</th></tr></thead><tbody id="rw">${rows()}</tbody></table></div></div></div>
 <div class="team-panels"><section class="cd workload-card"><h3>Team Members Workload</h3>${MEM.map(
         (member, index) => {
           const tasks = T.filter((task) => task.w === member.n);
@@ -354,7 +354,7 @@
           : teamsTab === "explore"
             ? "Discover teams in this class"
             : "Team invitations waiting for your response";
-      return `${hd("Teams", "Manage your teams and collaborate on tasks")}
+      return `<div class="teams-mobile-topbar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20C4 11 10 4 20 4c0 9-5 15-13 15M5 20c3-5 6-8 10-11"/></svg><b>CPS<span>1043</span></b>${top()}</div>${hd("Teams", "Manage your teams and collaborate on tasks")}
         <section class="teams-tabs-panel"><div class="teams-tabs" role="group" aria-label="Team views">${[
           ["all", "All Teams"],
         ]
@@ -384,11 +384,11 @@
         ["list", "Project Manager & Planning Coordinator"],
         ["ck", "Estimation & Quality Assurance Engineer"],
       ];
-      return `${hd("Member", "View and manage your group members")}
-      <section class="member-team-card"><div class="member-team-summary"><span class="member-team-icon">${i("users")}</span><div class="member-team-copy"><h2>RotiCanai</h2><p>${escapeHtml(teamDirectory[0].project)}</p><div class="member-team-meta"><span>${i("users")}${MEM.length} members</span><span>${i("doc")}${escapeHtml(teamDirectory[0].project)}</span></div></div><div class="member-team-actions"><button type="button" class="member-invite-button" data-a="inv">${i("users")}Invite Member</button><button type="button" class="member-team-more" aria-label="More team options">•••</button></div></div>
+      return `<div class="member-mobile-topbar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20C4 11 10 4 20 4c0 9-5 15-13 15M5 20c3-5 6-8 10-11"/></svg><b>CPS<span>1043</span></b>${top()}</div>${hd("Member", "View and manage your group members")}
+      <section class="member-team-card"><div class="member-team-summary"><span class="member-team-icon">${i("users")}</span><div class="member-team-copy"><h2>RotiCanai</h2><p>${escapeHtml(teamDirectory[0].project)}</p><div class="member-team-meta"><span>${i("users")}${MEM.length} members</span><span>${i("doc")}${escapeHtml(teamDirectory[0].project)}</span></div></div><div class="member-team-actions"><button type="button" class="member-invite-button" data-a="inv" aria-label="Invite Member">${i("users")}Invite Member</button><button type="button" class="member-team-more" aria-label="More team options">•••</button></div></div>
         <div class="member-tabs"><button type="button" class="selected" aria-current="page">Group Members</button></div></section>
       ${memberNotice ? `<p class="member-notice" role="status">${escapeHtml(memberNotice)}</p>` : ""}<section class="member-content"><article class="member-roster-card"><header class="member-roster-heading"><h2>${i("users")}Group Members (${MEM.length})</h2><label class="member-search">${i("search")}<input id="member-search" type="search" value="${escapeHtml(memberQuery)}" placeholder="Search member..." aria-label="Search members"></label></header><div class="member-table-scroll"><table class="member-table"><thead><tr><th>Name</th><th>Role</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead><tbody id="member-rows">${memberRows()}</tbody></table></div></article>
-      <aside class="member-roles-card"><header><h2>${i("list")}Group Role Distribution</h2></header>${roles.map(([icon, role]) => `<article class="member-role-summary"><span class="member-role-icon">${i(icon)}</span><span class="member-role-title">${role}</span><span class="member-role-count"><b>${MEM.filter((member) => member.r === role).length}</b><small>members</small></span></article>`).join("")}</aside></section>`;
+      <aside class="member-roles-card"><header><h2>${i("list")}Group Role Distribution</h2></header>${roles.map(([icon, role]) => `<article class="member-role-summary"><span class="member-role-icon">${i(icon)}</span><span class="member-role-title">${role}</span><span class="member-role-count"><b>${MEM.filter((member) => member.r === role).length}</b><small>members</small></span>${i("rt")}</article>`).join("")}</aside></section>`;
     },
   };
 
@@ -402,9 +402,9 @@
     return matches
       ? `<tr class="lecturer-task-row">
       <td><div class="lecturer-task-name"><span class="lecturer-doc">${i("doc")}</span><b>${escapeHtml(lecturerTask.title)}</b></div></td>
-      <td><time datetime="${lecturerTask.assigned}">${fd(lecturerTask.assigned)}</time></td>
-      <td><time datetime="${lecturerTask.deadline}">${fd(lecturerTask.deadline)}</time></td>
-      <td><span class="lecturer-status"><span aria-hidden="true"></span>${lecturerTask.status}</span></td>
+      <td class="lecturer-date-cell"><span class="lecturer-mobile-label">Assigned Date</span><time datetime="${lecturerTask.assigned}">${fd(lecturerTask.assigned)}</time></td>
+      <td class="lecturer-date-cell"><span class="lecturer-mobile-label">Deadline</span><time datetime="${lecturerTask.deadline}">${fd(lecturerTask.deadline)}</time></td>
+      <td class="lecturer-status-cell"><span class="lecturer-mobile-label">Status</span><span class="lecturer-status"><span aria-hidden="true"></span>${lecturerTask.status}</span></td>
       <td><button type="button" class="lecturer-open" data-a="lecturerDetails" aria-label="View task detail"><span>View Task Detail</span>${i("rt")}</button></td>
     </tr>`
       : '<tr><td colspan="5" class="lecturer-empty">No tasks found.</td></tr>';
@@ -422,7 +422,7 @@
   function memberRows() {
     const query = memberQuery.trim().toLowerCase();
     const matches = [...MEM].sort((a, b) => Number(!!b.you) - Number(!!a.you)).filter((member) => `${member.n} ${member.short || ""} ${member.r}`.toLowerCase().includes(query));
-    return matches.map((member) => `<tr><td><div class="member-person"><span class="member-avatar ${member.you ? "member-avatar-you" : ""}">${escapeHtml((member.short || member.n)[0])}</span><b>${escapeHtml(member.n)}${member.you ? ' <small>(You)</small>' : ""}</b></div></td><td><span class="member-role">${escapeHtml(member.r)}</span></td><td>${escapeHtml(member.e || "—")}</td><td>${member.o == null ? "—" : `<span class="member-online ${member.o ? "" : "offline"}"></span>${member.o ? "Online" : "Offline"}`}</td><td><button type="button" class="member-row-more" aria-label="More options for ${escapeHtml(member.n)}">•••</button></td></tr>`).join("") || '<tr><td colspan="5" class="member-no-results">Tiada ahli sepadan dengan carian.</td></tr>';
+    return matches.sort((a, b) => Number(Boolean(b.you)) - Number(Boolean(a.you))).map((member) => `<tr><td><div class="member-person"><span class="member-avatar ${member.you ? "member-avatar-you" : ""}">${escapeHtml((member.short || member.n)[0])}</span><b>${escapeHtml(member.n)}${member.you ? ' <small>(You)</small>' : ""}</b></div></td><td><span class="member-role">${escapeHtml(member.r)}</span></td><td>${escapeHtml(member.e || "—")}</td><td>${member.o == null ? "—" : `<span class="member-online ${member.o ? "" : "offline"}"></span>${member.o ? "Online" : "Offline"}`}</td><td><span class="member-action-empty" aria-label="No actions available">—</span></td></tr>`).join("") || '<tr><td colspan="5" class="member-no-results">Tiada ahli sepadan dengan carian.</td></tr>';
   }
 
   function teamInitials(name) {
@@ -505,8 +505,7 @@
 
   function rows() {
     const q = Q.toLowerCase();
-    return (
-      T.filter(
+    const matching = T.filter(
         (t) =>
           (tab === "all" ||
             (tab === "my"
@@ -515,14 +514,18 @@
                 ? t.s === 1
                 : t.s === 2)) &&
           t.t.toLowerCase().includes(q),
-      )
+      );
+    if (!matching.length) {
+      const noTasksYet = T.length === 0;
+      return `<tr class="team-empty-row"><td colspan="5"><div class="team-empty-state"><span class="team-empty-art">${i("doc")}</span><h3>${noTasksYet ? "No tasks found" : "No matching tasks"}</h3><p>${noTasksYet ? "There are no tasks assigned to your group yet. Start by adding a new task." : "Try another status or search term."}</p>${noTasksYet ? `<button type="button" class="bt d" data-a="add">${i("plus")}Add Task</button>` : ""}</div></td></tr>`;
+    }
+    return matching
         .sort((a, b) => (a.s === 2) - (b.s === 2) || (a.d < b.d ? -1 : 1))
         .map(
           (t) =>
             `<tr><td data-label="Task Title"><span class="team-mobile-label">Task Title</span><span class="team-task-title">${escapeHtml(t.t)}</span></td><td data-label="Assigned To"><span class="team-assignee"><span class="team-mini-avatar avatar-${MEM.findIndex((member) => member.n === t.w)}">${escapeHtml(t.w[0])}</span>${escapeHtml(t.w)}</span></td><td data-label="Due Date"><time datetime="${t.d}">${fd(t.d)}</time></td><td data-label="Status"><select class="team-status-select ${PC[SN[t.s]]}" data-id="${t.id}" aria-label="Status: ${escapeHtml(t.t)}">${SN.map((status, value) => `<option value="${value}" ${t.s === value ? "selected" : ""}>${status}</option>`).join("")}</select></td><td data-label="Actions"><button class="mo" data-a="cy" data-v="${t.id}" aria-label="Cycle status: ${escapeHtml(t.t)}" title="Cycle task status">...</button></td></tr>`,
         )
-        .join("") || '<tr><td colspan="5" class="mu">No tasks found.</td></tr>'
-    );
+        .join("");
   }
 
   function ask(t, body, ok) {

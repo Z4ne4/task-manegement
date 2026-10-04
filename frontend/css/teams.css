@@ -1,4 +1,5 @@
 /* Team directory */
+.teams-mobile-topbar { display: none; }
 .teams-tabs-panel {
   display: flex;
   align-items: center;
@@ -270,30 +271,82 @@
   }
 }
 @media (max-width: 600px) {
+  .teams-mobile-topbar {
+    display: flex;
+    align-items: center;
+    min-height: 66px;
+    margin: -20px -14px 20px;
+    padding: 8px 18px;
+    border-bottom: 1px solid var(--ln);
+    background: #fff;
+  }
+  .teams-mobile-topbar > .i { width: 25px; height: 25px; margin-right: 8px; color: var(--g); }
+  .teams-mobile-topbar > b { color: #26364b; font-size: 20px; letter-spacing: -.5px; }
+  .teams-mobile-topbar > b span { color: var(--g); }
+  .teams-mobile-topbar .tr { gap: 5px; }
+  .teams-mobile-topbar .pf { gap: 0; padding-left: 8px; }
+  .teams-mobile-topbar .pf .av { width: 38px; height: 38px; }
+  .teams-mobile-topbar .pf > div,
+  .teams-mobile-topbar .pf > svg { display: none; }
+  [data-page="teams"] .tp { align-items: flex-start; margin-bottom: 18px; }
+  [data-page="teams"] .tp h1 { font-size: 32px; line-height: 1.15; }
+  [data-page="teams"] .tp .mu { margin-top: 4px; font-size: 16px; }
+  [data-page="teams"] .tp .tr { display: none; }
   .teams-tabs-panel {
-    flex-wrap: wrap;
-    gap: 0;
-    padding: 0 10px 12px;
+    flex-wrap: nowrap;
+    min-height: 64px;
+    gap: 12px;
+    padding: 0 10px;
   }
   .teams-tabs {
-    width: 100%;
-    justify-content: space-between;
-    gap: 6px;
+    flex: 1;
+    width: auto;
+    min-width: 0;
     min-height: 58px;
+    gap: 0;
   }
   .teams-tabs button {
     min-width: 0;
     flex: 1;
-    padding-inline: 2px;
-    font-size: 13px;
+    padding-inline: 8px;
+    font-size: 15px;
   }
   .teams-tabs button.selected::after {
     bottom: 0;
   }
   .teams-create {
-    width: 100%;
-    min-height: 44px;
+    flex: none;
+    width: auto;
+    min-width: 142px;
+    min-height: 48px;
+    margin-left: 0;
+    padding: 8px 12px;
+    font-size: 14px;
   }
+  .teams-content {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 14px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+  .teams-content-head { display: contents; }
+  .teams-content-head > div { order: 1; margin: 20px 10px 10px; }
+  .teams-search {
+    order: 0;
+    flex: none;
+    width: 100%;
+    height: 54px;
+    padding-inline: 14px;
+    border-radius: 14px;
+    background: #fff;
+  }
+  .teams-search input { font-size: 16px; }
+  .teams-content-head h2 { font-size: 25px; }
+  .teams-content-head p { margin-top: 2px; font-size: 15px; }
   .teams-content {
     min-height: calc(100dvh - 290px);
     margin-top: 12px;
@@ -320,32 +373,64 @@
   }
   .teams-grid {
     grid-template-columns: minmax(0, 1fr);
-    gap: 10px;
+    gap: 12px;
+    order: 2;
   }
+  .teams-empty-search { order: 3; }
   .team-directory-card {
+    display: grid;
+    position: relative;
+    grid-template-columns: 88px minmax(0, 1fr);
+    grid-template-rows: 34px 29px 42px 52px;
+    align-items: center;
+    column-gap: 12px;
     min-height: 0;
-    padding: 14px;
+    padding: 15px;
+    border-radius: 16px;
   }
-  .directory-card-top {
-    min-height: 78px;
-  }
+  .directory-card-top { display: contents; }
   .directory-monogram {
-    width: 68px;
-    height: 68px;
-    font-size: 23px;
+    grid-column: 1;
+    grid-row: 1 / 4;
+    width: 88px;
+    height: 88px;
+    border-radius: 14px;
+    font-size: 29px;
   }
+  .directory-owner { display: none; }
+  .directory-more { position: absolute; top: 12px; right: 12px; width: 42px; height: 42px; font-size: 17px; }
   .team-directory-card h3 {
-    margin-top: 7px;
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end;
+    margin: 0;
+    padding-right: 44px;
+    font-size: 19px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  .directory-members {
-    min-height: 48px;
-  }
+  .directory-project { grid-column: 2; grid-row: 2; align-self: center; overflow: hidden; font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
+  .directory-members { grid-column: 2; grid-row: 3; min-height: 0; gap: 12px; }
   .directory-avatar {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
   }
   .directory-view {
-    min-height: 44px;
-    margin-top: 8px;
+    grid-column: 1 / -1;
+    grid-row: 4;
+    min-height: 50px;
+    margin-top: 4px;
+    font-size: 16px;
   }
+}
+@media (max-width: 360px) {
+  .teams-tabs-panel { gap: 6px; padding-inline: 7px; }
+  .teams-create { min-width: 132px; padding-inline: 8px; font-size: 13px; }
+  .team-directory-card { grid-template-columns: 72px minmax(0, 1fr); column-gap: 9px; padding: 11px; }
+  .directory-monogram { width: 68px; height: 68px; }
+  .team-directory-card h3 { padding-right: 39px; font-size: 17px; }
+  .directory-more { top: 9px; right: 9px; width: 36px; height: 36px; }
+  .directory-avatar { width: 30px; height: 30px; }
+  .directory-members { gap: 8px; font-size: 12px; }
 }
