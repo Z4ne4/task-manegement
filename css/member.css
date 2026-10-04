@@ -1,0 +1,103 @@
+/* Group member directory */
+.member-team-card, .member-roster-card, .member-roles-card { min-width: 0; border: 1px solid var(--ln); border-radius: 11px; background: var(--sf); }
+.member-team-card { margin-bottom: 16px; overflow: hidden; }
+.member-team-summary { display: flex; align-items: center; gap: 17px; min-height: 119px; padding: 17px 20px; }
+.member-team-icon { display: grid; place-items: center; flex: 0 0 74px; width: 74px; height: 74px; border-radius: 13px; background: #eff3ef; color: #244b35; }
+.member-team-icon .i { width: 38px; height: 38px; }
+.member-team-copy { min-width: 0; }
+.member-team-copy h2 { margin: 0; color: #131a24; font-size: 21px; }
+.member-team-copy > p { margin: 3px 0 9px; color: #5e6b7e; font-size: 14px; }
+.member-team-meta { display: flex; flex-wrap: wrap; gap: 20px; color: #647185; font-size: 12px; }
+.member-team-meta span { display: inline-flex; align-items: center; gap: 7px; }
+.member-team-meta .i { width: 17px; height: 17px; }
+.member-team-actions { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.member-invite-button, .member-team-more { display: inline-flex; justify-content: center; align-items: center; gap: 9px; min-height: 42px; padding: 0 15px; border: 1px solid #28875a; border-radius: 8px; background: white; color: #176b42; font: inherit; font-size: 13px; cursor: pointer; }
+.member-invite-button .i { width: 18px; height: 18px; }
+.member-team-more { width: 44px; padding: 0; border-color: var(--ln); color: #17202d; font-size: 17px; font-weight: 800; letter-spacing: 1px; }
+.member-tabs { display: flex; gap: 30px; min-height: 57px; padding: 0 18px; border-top: 1px solid #eff0ef; }
+.member-tabs button { position: relative; padding: 0 13px; border: 0; background: transparent; color: #5a6678; font: inherit; font-size: 13px; cursor: pointer; }
+.member-tabs button.selected { color: #18202a; font-weight: 700; }
+.member-tabs button.selected::after { position: absolute; right: 0; bottom: 0; left: 0; height: 3px; border-radius: 3px 3px 0 0; background: #16804b; content: ""; }
+.member-notice { margin: -5px 0 14px; padding: 10px 13px; border: 1px solid #cfe7d7; border-radius: 7px; background: #f0f8f2; color: #236744; font-size: 12px; }
+.member-content { display: grid; grid-template-columns: minmax(0, 1.9fr) minmax(300px, .94fr); gap: 16px; align-items: stretch; }
+.member-roster-card, .member-roles-card { padding: 18px; }
+.member-roster-heading { display: flex; justify-content: space-between; align-items: center; gap: 15px; margin-bottom: 15px; }
+.member-roster-heading h2, .member-roles-card header h2 { display: flex; align-items: center; gap: 10px; margin: 0; color: #161d26; font-size: 16px; }
+.member-roster-heading h2 .i, .member-roles-card header h2 .i { width: 23px; height: 23px; color: #147b48; }
+.member-search { display: flex; align-items: center; gap: 9px; width: min(244px, 48%); height: 40px; padding: 0 11px; border: 1px solid #e1e5e5; border-radius: 8px; color: #677386; }
+.member-search .i { width: 17px; height: 17px; flex: none; }
+.member-search input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: #182230; font: inherit; font-size: 12px; }
+.member-table-scroll { overflow-x: auto; }
+.member-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.member-table thead { background: #f5f5f4; }
+.member-table th { padding: 13px 10px; color: #4f5b6c; font-size: 11px; font-weight: 500; text-align: left; white-space: nowrap; }
+.member-table th:first-child { border-radius: 7px 0 0 7px; }
+.member-table th:last-child { border-radius: 0 7px 7px 0; }
+.member-table td { padding: 12px 10px; border-bottom: 1px solid #ecefee; color: #192332; vertical-align: middle; }
+.member-table tbody tr:last-child td { border-bottom: 0; }
+.member-person { display: flex; align-items: center; gap: 10px; min-width: 170px; }
+.member-person b { font-size: 12px; line-height: 1.4; }
+.member-person b small { color: #667085; font-weight: 400; }
+.member-avatar { display: grid; place-items: center; flex: 0 0 42px; width: 42px; height: 42px; border-radius: 50%; background: #e8ebed; color: #17212d; font-size: 15px; font-weight: 700; }
+.member-avatar-you { background: #215a39; color: white; }
+.member-role { display: block; min-width: 148px; max-width: 190px; padding: 8px 10px; border-radius: 7px; background: #f0f3f1; color: #536071; font-size: 11px; line-height: 1.45; }
+.member-online { display: inline-block; width: 9px; height: 9px; margin-right: 7px; border-radius: 50%; background: #168a51; }
+.member-online.offline { background: #a0a5ad; }
+.member-row-more { width: 42px; height: 40px; border: 1px solid #e1e5e7; border-radius: 8px; background: #fff; color: #202b39; font-size: 16px; font-weight: 800; letter-spacing: 1px; cursor: pointer; }
+.member-no-results { padding: 22px !important; color: #768295 !important; text-align: center; }
+.member-invite-pending { padding: 5px 9px; border-radius: 14px; background: #fff4d6; color: #946200; font-size: 11px; }
+.member-roles-card header { margin: 3px 0 18px; }
+.member-role-summary { display: flex; align-items: center; gap: 12px; min-height: 80px; margin-bottom: 11px; padding: 12px; border-radius: 10px; background: #f6f8f6; }
+.member-role-summary:last-child { margin-bottom: 0; }
+.member-role-icon { display: grid; place-items: center; flex: 0 0 54px; width: 54px; height: 54px; border-radius: 50%; background: #e7f0e9; color: #26543b; }
+.member-role-icon .i { width: 24px; height: 24px; }
+.member-role-title { flex: 1; color: #263242; font-size: 12px; line-height: 1.5; }
+.member-role-count { display: grid; justify-items: center; flex: 0 0 44px; }
+.member-role-count b { color: #141b24; font-size: 22px; line-height: 1; }
+.member-role-count small { margin-top: 4px; color: #657184; font-size: 10px; }
+@media (max-width: 1000px) {
+  .member-content { grid-template-columns: minmax(0, 1.5fr) minmax(260px, .9fr); gap: 12px; }
+  .member-roster-card, .member-roles-card { padding: 13px; }
+  .member-table td, .member-table th { padding-inline: 7px; }
+  .member-person { min-width: 135px; }
+}
+@media (max-width: 760px) {
+  .member-content { grid-template-columns: 1fr; }
+  .member-team-summary { flex-wrap: wrap; }
+  .member-team-actions { margin-left: auto; }
+  .member-role-summary { min-height: 68px; }
+}
+@media (max-width: 600px) {
+  .member-team-summary { gap: 11px; padding: 13px; }
+  .member-team-icon { flex-basis: 54px; width: 54px; height: 54px; }
+  .member-team-icon .i { width: 29px; height: 29px; }
+  .member-team-copy { flex: 1; }
+  .member-team-copy h2 { font-size: 17px; }
+  .member-team-copy > p { font-size: 12px; }
+  .member-team-meta { gap: 8px 12px; font-size: 10px; }
+  .member-team-meta span:last-child { display: none; }
+  .member-team-actions { width: 100%; margin: 0; }
+  .member-invite-button { flex: 1; min-height: 40px; }
+  .member-team-more { width: 42px; }
+  .member-tabs { gap: 12px; min-height: 48px; padding-inline: 9px; }
+  .member-tabs button { padding-inline: 9px; font-size: 12px; }
+  .member-roster-card, .member-roles-card { padding: 11px; }
+  .member-roster-heading { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .member-roster-heading h2, .member-roles-card header h2 { font-size: 14px; }
+  .member-search { width: 100%; height: 38px; }
+  .member-table-scroll { overflow: visible; }
+  .member-table, .member-table tbody { display: block; width: 100%; }
+  .member-table thead { display: none; }
+  .member-table tbody tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 5px 8px; padding: 10px 2px; border-bottom: 1px solid #ecefee; }
+  .member-table tbody td { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 3px 2px; border: 0; font-size: 11px; }
+  .member-table tbody td::before { color: #758196; content: attr(data-label); font-size: 10px; }
+  .member-table tbody td:first-child { grid-column: 1 / -1; }
+  .member-table tbody td:nth-child(2) { grid-column: 1 / -1; }
+  .member-role { min-width: 0; max-width: none; }
+  .member-table tbody td:nth-child(3), .member-table tbody td:nth-child(4) { grid-column: 1; }
+  .member-table tbody td:last-child { grid-column: 2; grid-row: 3 / span 2; }
+  .member-person { min-width: 0; }
+  .member-person b { font-size: 11px; }
+  .member-avatar { flex-basis: 36px; width: 36px; height: 36px; }
+  .member-row-more { width: 36px; height: 36px; }
+}

@@ -1,0 +1,54 @@
+/* Management view for the user's own team */
+.own-team-page { max-width: 1120px; margin: 0 auto; }
+.own-team-breadcrumb { display: flex; align-items: center; gap: 10px; min-height: 34px; margin-bottom: 12px; color: #627187; font-size: .83rem; }
+.own-team-breadcrumb a { display: inline-flex; align-items: center; gap: 5px; color: #536781; text-decoration: none; }
+.own-team-breadcrumb .i { width: 16px; height: 16px; }
+.own-team-breadcrumb .tr { margin-left: auto; }
+.own-team-summary, .own-team-card { border: 1px solid var(--ln); border-radius: 10px; background: var(--sf); box-shadow: 0 2px 8px #172b4206; }
+.own-team-summary { display: flex; align-items: center; gap: 16px; padding: 14px; margin-bottom: 12px; }
+.own-team-mark { display: grid; place-items: center; flex: 0 0 74px; width: 74px; height: 74px; border-radius: 12px; background: #fff2e4; color: #87430b; font-size: 1.5rem; font-weight: 800; }
+.own-team-title { min-width: 0; }
+.own-team-title > div { display: flex; align-items: center; gap: 10px; }
+.own-team-title h1 { margin: 0; color: #111c31; font-size: 1.2rem; }
+.own-team-badge, .own-owner { padding: 3px 9px; border-radius: 20px; background: #def4e8; color: #137342; font-size: .68rem; font-weight: 700; }
+.own-team-title p { margin: 3px 0 5px; color: #526580; font-size: .82rem; }
+.own-team-avatars { display: flex; align-items: center; }
+.own-avatar { display: inline-grid; place-items: center; flex: 0 0 27px; width: 27px; height: 27px; border-radius: 50%; font-size: .7rem; font-weight: 700; }
+.own-team-avatars .own-avatar { margin-right: -4px; border: 2px solid white; }
+.own-team-avatars small { margin-left: 12px; color: #526580; font-size: .7rem; }
+.tone-0 { background: #e5edff; color: #2456c5; }.tone-1 { background: #e2f4fb; color: #137197; }.tone-2 { background: #ffede4; color: #c44e27; }.tone-3 { background: #eee5ff; color: #6940b6; }.tone-4 { background: #e4f4e9; color: #23814c; }
+.own-team-grid { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(290px, 1fr); gap: 12px; align-items: start; }
+.own-team-card { padding: 13px 14px; min-width: 0; }
+.own-team-card h2 { display: flex; align-items: center; gap: 6px; margin: 0 0 9px; color: #172033; font-size: .88rem; }
+.own-description p { margin: 0; color: #5b6c83; font-size: .77rem; line-height: 1.55; }
+.own-requests h2 span { display: inline-grid; place-items: center; min-width: 15px; height: 15px; padding: 0 4px; border-radius: 50%; background: #ef4444; color: white; font-size: .63rem; }
+.own-request { display: flex; align-items: center; gap: 8px; }
+.own-request > div { flex: 1; min-width: 0; display: grid; gap: 2px; font-size: .72rem; }
+.own-request small { color: #63748b; font-size: .64rem; }
+.own-request button { padding: 6px 9px; border: 1px solid #dce2ea; border-radius: 5px; background: white; color: #37465b; font: inherit; font-size: .66rem; cursor: pointer; }
+.own-request .own-accept { border-color: #13804d; background: #13804d; color: white; }
+.own-empty { margin: 0; color: #718096; font-size: .75rem; }
+.own-members { grid-column: 1; }
+.own-member { display: flex; align-items: center; gap: 9px; min-height: 38px; padding: 4px 6px; border: 1px solid #edf0f4; border-radius: 7px; }
+.own-member + .own-member { margin-top: 5px; }
+.own-member-name { display: grid; gap: 2px; flex: 1; min-width: 0; font-size: .72rem; }
+.own-member-name small { overflow: hidden; color: #63748b; font-size: .64rem; text-overflow: ellipsis; white-space: nowrap; }
+.own-owner { padding: 3px 7px; font-size: .58rem; }
+.own-more { width: 25px; height: 25px; border: 1px solid #e7eaf0; border-radius: 5px; background: white; color: #44546a; cursor: pointer; }
+.own-manage { grid-column: 2; grid-row: 2; }
+.own-manage button { display: flex; align-items: center; gap: 9px; width: 100%; min-height: 31px; padding: 5px 4px; border: 0; border-bottom: 1px solid #f0f1f3; background: transparent; color: #263449; text-align: left; font: inherit; font-size: .72rem; cursor: pointer; }
+.own-manage button:last-child { border-bottom: 0; }
+.own-manage button span { flex: 1; }
+.own-manage button .i { width: 14px; height: 14px; }
+.own-manage button .i:last-child { width: 13px; height: 13px; }
+.own-manage button:hover { color: #087544; }
+.own-manage .own-leave { color: #e53e3e; }
+@media (max-width: 700px) {
+  .own-team-page { padding: 0; }
+  .own-team-grid { grid-template-columns: 1fr; }
+  .own-members, .own-manage { grid-column: 1; grid-row: auto; }
+  .own-team-summary { gap: 11px; padding: 11px; }
+  .own-team-mark { flex-basis: 60px; width: 60px; height: 60px; }
+  .own-team-title h1 { font-size: 1.05rem; }
+  .own-request { flex-wrap: wrap; }
+}
