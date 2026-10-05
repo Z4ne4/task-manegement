@@ -976,9 +976,22 @@ body {
   padding: 20px 25px 40px;
 }
 .tp {
-  min-height: 54px;
-  align-items: flex-start;
-  margin-bottom: 10px;
+  min-height: 82px;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 14px 20px;
+  border: 1px solid #e0ebe1;
+  border-radius: 14px;
+  background: linear-gradient(108deg, #edf6ef 0%, #f7faf6 58%, #fff 100%);
+  box-shadow: 0 7px 22px rgba(25, 55, 35, .04);
+}
+.tp > div:first-child {
+  position: relative;
+  z-index: 1;
+}
+.tp h1 {
+  margin: 0;
+  color: #111820;
 }
 h1 {
   font-size: 32px;
@@ -1736,7 +1749,10 @@ td {
   }
   .tp {
     gap: 10px;
-    margin-bottom: 18px;
+    min-height: 76px;
+    margin-bottom: 15px;
+    padding: 12px 14px;
+    border-radius: 12px;
   }
   .tp .mu {
     font-size: 13px;
