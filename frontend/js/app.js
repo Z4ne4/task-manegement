@@ -91,7 +91,40 @@
       "Not Started": "ns",
     },
     SN = ["Not Started", "In Progress", "Completed"];
-  let T = [];
+  const teamTaskStorageKey = "cps1043-team-tasks-v1";
+  function loadTeamTasks() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(teamTaskStorageKey) || "[]");
+      if (!Array.isArray(saved)) return [];
+      return saved
+        .filter((task) => task &&
+          Number.isInteger(task.id) &&
+          typeof task.t === "string" &&
+          typeof task.w === "string" &&
+          MEM.some((member) => member.n === task.w) &&
+          typeof task.d === "string" &&
+          /^\d{4}-\d{2}-\d{2}$/.test(task.d) &&
+          Number.isInteger(task.s) && task.s >= 0 && task.s < SN.length)
+        .map(({ id, t, description, w, d, s }) => ({
+          id,
+          t,
+          description: typeof description === "string" ? description : "",
+          w,
+          d,
+          s,
+        }));
+    } catch {
+      return [];
+    }
+  }
+  function saveTeamTasks() {
+    try {
+      localStorage.setItem(teamTaskStorageKey, JSON.stringify(T));
+    } catch {
+      // Keep the app usable for this session if browser storage is unavailable.
+    }
+  }
+  let T = loadTeamTasks();
   // Initial lecturer task values follow the supplied design reference.
   const lecturerTask = {
     title: "Group & Project Information",
@@ -236,15 +269,26 @@
     `<div class="cd"><div class="ch">${i("users")}<h3>Team Members (RotiCanai)</h3></div>${MEM.map((m) => `<div class="tl ${m.you ? "hl" : ""}"><span class="av">${(m.short || m.n)[0]}</span><div><b>${m.n}</b><div class="mu" style="font-size:.8125rem">${m.r}</div></div>${m.you ? '<span class="you">You</span>' : ""}</div>`).join("")}</div>`;
 
   function dashboardTasks() {
-    return [{
-      id: "lecturer-group-project",
-      title: lecturerTask.title,
-      date: lecturerTask.deadline,
-      dateLabel: fd(lecturerTask.deadline),
-      source: "Lecturer",
-      status: lecturerTask.status === "Ongoing" ? "Ongoing" : lecturerTask.status,
-      page: "lecturer",
-    }];
+    return [
+      {
+        id: "lecturer-group-project",
+        title: lecturerTask.title,
+        date: lecturerTask.deadline,
+        dateLabel: fd(lecturerTask.deadline),
+        source: "Lecturer",
+        status: lecturerTask.status === "Ongoing" ? "In Progress" : lecturerTask.status,
+        page: "lecturer",
+      },
+      ...T.map((task) => ({
+        id: `team-${task.id}`,
+        title: task.t,
+        date: task.d,
+        dateLabel: fd(task.d),
+        source: "Team",
+        status: ["To Do", "In Progress", "Completed"][task.s],
+        page: "team",
+      })),
+    ];
   }
 
   function dashboardRows() {
@@ -259,8 +303,11 @@
   function upcomingDashboardTasks() {
     const now = new Date();
     now.setHours(0, 0, 0, 0);
-    const list = [{ title: lecturerTask.title, date: lecturerTask.deadline, source: "Task from Lecturer", page: "lecturer" }];
-    return list.filter((task) => new Date(`${task.date}T00:00:00`) >= now).sort((a, b) => a.date.localeCompare(b.date)).slice(0, 3);
+    return dashboardTasks()
+      .filter((task) => new Date(`${task.date}T00:00:00`) >= now && task.status !== "Completed")
+      .map((task) => ({ ...task, source: task.source === "Lecturer" ? "Task from Lecturer" : "Team task" }))
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .slice(0, 3);
   }
 
   const V = {
@@ -272,7 +319,7 @@
       return `<div class="dashboard-topbar"><div class="dashboard-mobile-brand"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20C4 11 10 4 20 4c0 9-5 15-13 15M5 20c3-5 6-8 10-11"/></svg><b>CPS1043</b></div>${top()}</div>
 <section class="dashboard-welcome"><div><h1>Welcome back, Nizam</h1><p class="dashboard-project"><b>RotiCanai</b><span></span>${escapeHtml(teamDirectory[0].project)}</p><p class="dashboard-welcome-note">Stay organised and keep track of your tasks and deadlines.</p></div><div class="dashboard-hero-art"><img src="assets/planner.svg" alt="Desk with a calendar, laptop, books and plants"><p>Plan<br>Organise<br>Make it happen</p></div></section>
 <section class="dashboard-stats" aria-label="Task summary">${[["doc", "Total Tasks", tasks.length, "green"], ["list", "To Do", count("To Do"), "blue"], ["clock", "In Progress", count("In Progress"), "amber"], ["ck", "Completed", count("Completed"), "green"]].map(([icon, label, value, tone]) => `<article class="dashboard-stat"><span class="dashboard-stat-icon ${tone}">${i(icon)}</span><div><small>${label}</small><strong>${value}</strong></div></article>`).join("")}</section>
-<section class="dashboard-content"><article class="dashboard-panel dashboard-my-tasks"><header class="dashboard-panel-heading"><h2>${i("doc")}My Tasks</h2><label class="dashboard-sort"><select id="dashboard-sort" aria-label="Sort tasks by due date"><option value="earliest" ${dashboardSort === "earliest" ? "selected" : ""}>Due Date (Earliest)</option><option value="latest" ${dashboardSort === "latest" ? "selected" : ""}>Due Date (Latest)</option></select></label></header><div class="dashboard-tabs" role="tablist" aria-label="Filter my tasks">${filters.map(([key, label, number]) => `<button type="button" role="tab" aria-selected="${dashboardTab === key}" class="${dashboardTab === key ? "selected" : ""}" data-a="dashboardTab" data-v="${key}">${label} (${number})</button>`).join("")}</div><div class="dashboard-table-scroll"><table class="dashboard-task-table"><thead><tr><th>Task Title</th><th>Source</th><th>Deadline</th><th>Status</th><th>Open</th></tr></thead><tbody id="dashboard-task-rows">${dashboardRows()}</tbody></table></div></article>
+<section class="dashboard-content"><article class="dashboard-panel dashboard-my-tasks"><header class="dashboard-panel-heading"><h2>${i("doc")}Assigned Tasks</h2><label class="dashboard-sort"><select id="dashboard-sort" aria-label="Sort tasks by due date"><option value="earliest" ${dashboardSort === "earliest" ? "selected" : ""}>Due Date (Earliest)</option><option value="latest" ${dashboardSort === "latest" ? "selected" : ""}>Due Date (Latest)</option></select></label></header><div class="dashboard-tabs" role="tablist" aria-label="Filter assigned tasks">${filters.map(([key, label, number]) => `<button type="button" role="tab" aria-selected="${dashboardTab === key}" class="${dashboardTab === key ? "selected" : ""}" data-a="dashboardTab" data-v="${key}">${label} (${number})</button>`).join("")}</div><div class="dashboard-table-scroll"><table class="dashboard-task-table"><thead><tr><th>Task Title</th><th>Source</th><th>Deadline</th><th>Status</th><th>Open</th></tr></thead><tbody id="dashboard-task-rows">${dashboardRows()}</tbody></table></div></article>
 <aside class="dashboard-side"><section class="dashboard-panel dashboard-deadlines"><header class="dashboard-panel-heading"><h2>${i("cal")}Upcoming Deadlines</h2></header>${upcoming.length ? upcoming.map((task) => { const [, month, day] = task.date.split("-"); return `<a class="dashboard-deadline" href="#${task.page}"><span class="dashboard-deadline-date"><b>${day}</b><small>${MON[Number(month) - 1]}</small></span><span class="dashboard-deadline-copy"><b>${escapeHtml(task.title)}</b><small>${escapeHtml(task.source)}</small></span>${i("rt")}</a>`; }).join("") : '<p class="dashboard-empty">No upcoming deadlines.</p>'}</section><section class="dashboard-panel dashboard-members"><header class="dashboard-panel-heading"><h2>${i("users")}Team Members (RotiCanai)</h2><a href="#member">Manage</a></header>${MEM.map((member, index) => `<div class="dashboard-member"><span class="dashboard-member-avatar member-tone-${index}">${escapeHtml((member.short || member.n)[0])}</span><div><b>${escapeHtml(member.short || member.n)}</b><small>${escapeHtml(member.r)}</small></div>${member.you ? '<span class="dashboard-you">You</span>' : ""}</div>`).join("")}</section></aside></section>`;
     },
 
@@ -310,8 +357,8 @@
     team() {
       return `<div class="team-mobile-topbar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20C4 11 10 4 20 4c0 9-5 15-13 15M5 20c3-5 6-8 10-11"/></svg><b>CPS<span>1043</span></b>${top()}</div>${hd("Team Task", "Manage and track tasks within your group")}<div class="cd pc team-group"><div class="hd"><span class="ib">${i("users")}</span><div><h3>RotiCanai</h3><div class="mu">${escapeHtml(teamDirectory[0].project)}</div></div><div class="team-member-total">${i("users")}<b>${MEM.length}</b><span>Group Members</span></div><a class="bt" href="#member">${i("users")}View Members</a></div></div>
 <div class="cd pc team-work-area"><div class="tb2">${[
-        ["all", "All Tasks"],
-        ["my", "My Tasks"],
+        ["all", "Open Tasks"],
+        ["my", "Assigned to Me"],
         ["on", "Ongoing"],
         ["done", "Completed"],
       ]
@@ -326,10 +373,10 @@
 <div class="team-panels"><section class="cd workload-card"><h3>Team Members Workload</h3>${MEM.map(
         (member, index) => {
           const tasks = T.filter((task) => task.w === member.n);
-          const counts = [2, 1, 0].map(
+          const counts = [0, 1, 2].map(
             (status) => tasks.filter((task) => task.s === status).length,
           );
-          return `<div class="workload-row"><span class="workload-avatar avatar-${index}">${member.n[0]}</span><div class="workload-name"><b>${member.n}</b><span>${tasks.length} tasks assigned</span></div><div class="workload-counts"><span class="workload-completed"><b>${counts[0]}</b><small>Completed</small></span><span class="workload-progress"><b>${counts[1]}</b><small>In Progress</small></span><span class="workload-not-started"><b>${counts[2]}</b><small>Not Started</small></span></div></div>`;
+          return `<div class="workload-row"><span class="workload-avatar avatar-${index}">${member.n[0]}</span><div class="workload-name"><b>${member.n}</b><span>${tasks.length} tasks assigned</span></div><div class="workload-counts"><span class="workload-not-started"><b>${counts[0]}</b><small>Not Started</small></span><span class="workload-progress"><b>${counts[1]}</b><small>In Progress</small></span><span class="workload-completed"><b>${counts[2]}</b><small>Completed</small></span></div></div>`;
         },
       ).join("")}</section>
 <section class="cd team-activity"><div class="ch"><h3>Recent Activity</h3>${teamActivity.length > 5 ? '<button type="button" class="activity-view-all" data-a="showTeamActivity">View all</button>' : ""}</div>${teamActivity.length ? teamActivity
@@ -385,7 +432,7 @@
         ["ck", "Estimation & Quality Assurance Engineer"],
       ];
       return `<div class="member-mobile-topbar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20C4 11 10 4 20 4c0 9-5 15-13 15M5 20c3-5 6-8 10-11"/></svg><b>CPS<span>1043</span></b>${top()}</div>${hd("Member", "View and manage your group members")}
-      <section class="member-team-card"><div class="member-team-summary"><span class="member-team-icon">${i("users")}</span><div class="member-team-copy"><h2>RotiCanai</h2><p>${escapeHtml(teamDirectory[0].project)}</p><div class="member-team-meta"><span>${i("users")}${MEM.length} members</span><span>${i("doc")}${escapeHtml(teamDirectory[0].project)}</span></div></div><div class="member-team-actions"><button type="button" class="member-invite-button" data-a="inv" aria-label="Invite Member">${i("users")}Invite Member</button><button type="button" class="member-team-more" aria-label="More team options">•••</button></div></div>
+      <section class="member-team-card"><div class="member-team-summary"><span class="member-team-icon">${i("users")}</span><div class="member-team-copy"><h2>RotiCanai</h2><p>${escapeHtml(teamDirectory[0].project)}</p><div class="member-team-meta"><span>${i("users")}${MEM.length} members</span><span>${i("doc")}${escapeHtml(teamDirectory[0].project)}</span></div></div><div class="member-team-actions"><button type="button" class="member-invite-button" data-a="inv" aria-label="Invite Member">${i("users")}Invite Member</button></div></div>
         <div class="member-tabs"><button type="button" class="selected" aria-current="page">Group Members</button></div></section>
       ${memberNotice ? `<p class="member-notice" role="status">${escapeHtml(memberNotice)}</p>` : ""}<section class="member-content"><article class="member-roster-card"><header class="member-roster-heading"><h2>${i("users")}Group Members (${MEM.length})</h2><label class="member-search">${i("search")}<input id="member-search" type="search" value="${escapeHtml(memberQuery)}" placeholder="Search member..." aria-label="Search members"></label></header><div class="member-table-scroll"><table class="member-table"><thead><tr><th>Name</th><th>Role</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead><tbody id="member-rows">${memberRows()}</tbody></table></div></article>
       <aside class="member-roles-card"><header><h2>${i("list")}Group Role Distribution</h2></header>${roles.map(([icon, role]) => `<article class="member-role-summary"><span class="member-role-icon">${i(icon)}</span><span class="member-role-title">${role}</span><span class="member-role-count"><b>${MEM.filter((member) => member.r === role).length}</b><small>members</small></span>${i("rt")}</article>`).join("")}</aside></section>`;
@@ -507,30 +554,28 @@
     const q = Q.toLowerCase();
     const matching = T.filter(
         (t) =>
-          (tab === "all" ||
-            (tab === "my"
-              ? t.w === ME
-              : tab === "on"
-                ? t.s === 1
-                : t.s === 2)) &&
+          (tab === "done"
+            ? t.s === 2
+            : t.s !== 2 && (tab !== "my" || t.w === ME) && (tab !== "on" || t.s === 1)) &&
           t.t.toLowerCase().includes(q),
       );
     if (!matching.length) {
       const noTasksYet = T.length === 0;
-      return `<tr class="team-empty-row"><td colspan="5"><div class="team-empty-state"><span class="team-empty-art">${i("doc")}</span><h3>${noTasksYet ? "No tasks found" : "No matching tasks"}</h3><p>${noTasksYet ? "There are no tasks assigned to your group yet. Start by adding a new task." : "Try another status or search term."}</p>${noTasksYet ? `<button type="button" class="bt d" data-a="add">${i("plus")}Add Task</button>` : ""}</div></td></tr>`;
+      const allDone = !noTasksYet && tab === "all" && !Q.trim() && T.every((task) => task.s === 2);
+      return `<tr class="team-empty-row"><td colspan="5"><div class="team-empty-state"><span class="team-empty-art">${i("doc")}</span><h3>${noTasksYet ? "No tasks found" : allDone ? "All tasks completed" : "No matching tasks"}</h3><p>${noTasksYet ? 'There are no team tasks yet. Lecturer assignments appear in <a href="#lecturer">Lecturer Task</a> and on your Dashboard.' : allDone ? 'You have completed every team task. View the <button type="button" data-a="tab" data-v="done">Completed</button> tab to review them.' : "Try another status or search term."}</p></div></td></tr>`;
     }
     return matching
         .sort((a, b) => (a.s === 2) - (b.s === 2) || (a.d < b.d ? -1 : 1))
         .map(
           (t) =>
-            `<tr><td data-label="Task Title"><span class="team-mobile-label">Task Title</span><span class="team-task-title">${escapeHtml(t.t)}</span></td><td data-label="Assigned To"><span class="team-assignee"><span class="team-mini-avatar avatar-${MEM.findIndex((member) => member.n === t.w)}">${escapeHtml(t.w[0])}</span>${escapeHtml(t.w)}</span></td><td data-label="Due Date"><time datetime="${t.d}">${fd(t.d)}</time></td><td data-label="Status"><select class="team-status-select ${PC[SN[t.s]]}" data-id="${t.id}" aria-label="Status: ${escapeHtml(t.t)}">${SN.map((status, value) => `<option value="${value}" ${t.s === value ? "selected" : ""}>${status}</option>`).join("")}</select></td><td data-label="Actions"><button class="mo" data-a="cy" data-v="${t.id}" aria-label="Cycle status: ${escapeHtml(t.t)}" title="Cycle task status">...</button></td></tr>`,
+            `<tr><td data-label="Task Title"><span class="team-mobile-label">Task Title</span><span class="team-task-title">${escapeHtml(t.t)}</span></td><td data-label="Assigned To"><span class="team-assignee"><span class="team-mini-avatar avatar-${MEM.findIndex((member) => member.n === t.w)}">${escapeHtml(t.w[0])}</span>${escapeHtml(t.w)}</span></td><td data-label="Due Date"><time datetime="${t.d}">${fd(t.d)}</time></td><td data-label="Status"><select class="team-status-select ${PC[SN[t.s]]}" data-id="${t.id}" aria-label="Status: ${escapeHtml(t.t)}">${SN.map((status, value) => `<option value="${value}" ${t.s === value ? "selected" : ""}>${status}</option>`).join("")}</select></td><td data-label="Actions"><button class="mo" data-a="taskActions" data-v="${t.id}" aria-label="Actions for ${escapeHtml(t.t)}" title="Task actions">···</button></td></tr>`,
         )
         .join("");
   }
 
-  function ask(t, body, ok) {
+  function ask(t, body, ok, confirmLabel = "Save") {
     const df = $("#df");
-    df.innerHTML = `<h3>${t}</h3>${body}<div class="ac"><button value="x" formnovalidate>Cancel</button><button class="pm" value="ok">Save</button></div>`;
+    df.innerHTML = `<h3>${t}</h3>${body}<div class="ac"><button value="x" formnovalidate>Cancel</button><button class="pm" value="ok">${confirmLabel}</button></div>`;
     df.onsubmit = (e) => {
       if (e.submitter && e.submitter.value === "ok") ok(new FormData(df));
     };
@@ -676,10 +721,40 @@
       tab = v;
       draw();
     },
-    cy(v) {
-      const t = T[+v];
-      t.s = (t.s + 1) % 3;
-      draw();
+    taskActions(v) {
+      const task = T.find((item) => item.id === Number(v));
+      if (!task) return;
+      const form = $("#df");
+      form.innerHTML = `<h3>Task Actions</h3><p>Choose an action for “${escapeHtml(task.t)}”.</p><div class="team-row-actions"><button type="button" data-a="editTask" data-v="${task.id}">Edit Task</button><button type="button" class="delete" data-a="deleteTask" data-v="${task.id}">Delete Task</button><button type="button" data-a="closeTaskActions">Cancel</button></div>`;
+      $("#dg").showModal();
+    },
+    closeTaskActions() {
+      $("#dg").close();
+    },
+    editTask(v) {
+      const task = T.find((item) => item.id === Number(v));
+      if (!task) return;
+      $("#dg").close();
+      ask("Edit Task", `<label>Task Title<input name="t" maxlength="80" required value="${escapeHtml(task.t)}"></label><label>Description<textarea name="description" maxlength="500">${escapeHtml(task.description || "")}</textarea></label><label>Assign To<select name="w" required>${MEM.map((member) => `<option value="${escapeHtml(member.n)}" ${task.w === member.n ? "selected" : ""}>${escapeHtml(member.n)}</option>`).join("")}</select></label><label>Due Date<input name="d" type="date" required value="${escapeHtml(task.d)}"></label><label>Status<select name="s">${SN.map((status, index) => `<option value="${index}" ${task.s === index ? "selected" : ""}>${status}</option>`).join("")}</select></label>`, (form) => {
+        task.t = form.get("t").trim();
+        task.description = form.get("description").trim();
+        task.w = form.get("w");
+        task.d = form.get("d");
+        task.s = Number(form.get("s"));
+        saveTeamTasks();
+        teamActivity.unshift({ who: ME, action: "updated", task: task.t, s: SN[task.s], when: "just now" });
+        draw();
+      });
+    },
+    deleteTask(v) {
+      const task = T.find((item) => item.id === Number(v));
+      if (!task) return;
+      $("#dg").close();
+      ask("Delete Task", `<p>Are you sure you want to delete “${escapeHtml(task.t)}”?</p>`, () => {
+        T = T.filter((item) => item.id !== task.id);
+        saveTeamTasks();
+        draw();
+      }, "Delete");
     },
     add() {
       const dialog = $("#dg"),
@@ -712,6 +787,7 @@
           s: Number(values.get("s")),
         };
         T.push(task);
+        saveTeamTasks();
         teamActivity.unshift({
           who: ME,
           action: "created",
@@ -754,10 +830,10 @@
     document.body.dataset.page = pg;
     $("#nv").innerHTML = [
       ["home", "home", "Dashboard"],
-      ["lecturer", "doc", "Lecturer Task"],
-      ["team", "users", "Team Task"],
+      ["lecturer", "doc", "Lecturer Tasks"],
+      ["team", "users", "Team Tasks"],
       ["teams", "users", "Teams"],
-      ["member", "user", "Member"],
+      ["member", "user", "Members"],
     ]
       .map(
         (x) =>
@@ -859,6 +935,7 @@
       const task = T.find((item) => item.id === Number(e.target.dataset.id));
       if (!task) return;
       task.s = Number(e.target.value);
+      saveTeamTasks();
       teamActivity.unshift({
         who: ME,
         action: "updated",

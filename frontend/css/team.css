@@ -103,6 +103,34 @@
   padding: 7px 14px;
   font-size: 14px;
 }
+.team-table tbody tr.team-empty-row td {
+  padding: 18px;
+  text-align: center;
+}
+.team-empty-state {
+  display: flex;
+  min-height: 300px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 22px 16px;
+  text-align: center;
+}
+.team-empty-art {
+  display: grid;
+  width: 112px;
+  height: 100px;
+  place-items: center;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #e1f5ec 0 48%, transparent 49%);
+  color: #1b2939;
+}
+.team-empty-art .i { width: 64px; height: 64px; stroke-width: 1.5; }
+.team-empty-state h3 { margin: 4px 0 6px; font-size: 21px; }
+.team-empty-state p { max-width: 480px; margin: 0; color: #66758a; font-size: 15px; line-height: 1.45; }
+.team-empty-state p a { color: var(--g); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.team-empty-state p button { padding: 0; border: 0; background: none; color: var(--g); font: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
 .team-task-title {
   color: #111b22;
 }
@@ -168,6 +196,31 @@
   width: 42px;
   height: 34px;
   background: #f4f4f3;
+}
+.team-row-actions {
+  display: grid;
+  gap: 9px;
+  margin-top: 18px;
+}
+.team-row-actions button {
+  min-height: 42px;
+  padding: 9px 14px;
+  border: 1px solid var(--ln);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.team-row-actions button.delete {
+  border-color: #f1d4d4;
+  background: #fff6f6;
+  color: #b42318;
+}
+.team-row-actions button:focus-visible {
+  outline: 3px solid #98cdb2;
+  outline-offset: 2px;
 }
 .team-panels {
   display: grid;
@@ -458,31 +511,13 @@
     border: 0;
   }
   .team-empty-row td::before { display: none; }
+  .team-table tbody tr.team-empty-row td { padding: 0; }
   .team-empty-state {
-    display: flex;
     min-height: 300px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 22px 16px;
     border-radius: 14px;
     background: #fff;
-    text-align: center;
   }
-  .team-empty-art {
-    display: grid;
-    width: 112px;
-    height: 100px;
-    place-items: center;
-    margin-bottom: 10px;
-    border-radius: 50%;
-    background: radial-gradient(ellipse, #e1f5ec 0 48%, transparent 49%);
-    color: #1b2939;
-  }
-  .team-empty-art .i { width: 64px; height: 64px; stroke-width: 1.5; }
-  .team-empty-state h3 { margin: 4px 0 6px; font-size: 21px; }
-  .team-empty-state p { max-width: 330px; margin: 0 0 16px; color: #66758a; font-size: 15px; line-height: 1.45; }
-  .team-empty-state .bt { min-width: 180px; min-height: 48px; justify-content: center; background: var(--g); border-color: var(--g); color: #fff; }
+  .team-empty-state p { max-width: 330px; }
   .team-table tbody td {
     display: grid;
     grid-template-columns: 96px minmax(0, 1fr);
